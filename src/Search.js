@@ -8,26 +8,32 @@ class Search extends Component {
     state = {
         query: '',
         searchList: []
-    }
+        }
 
     searchBooks = (event) => {
+        console.log("event", event)
         const searchWord = event.target.value.trim()
+        console.log("searchword", searchWord)
+        this.setState({query: searchWord}, () => {
+            if(this.state.query){
+                console.log("in booksapi", this.state)
+                BooksAPI.search(this.state.query).then((searchResult) => {
+                    this.setState({searchList: searchResult})
+                })
+                
+            }
+            else {
+                console.log("in else", this.state.searchList)
+                this.setState({searchList: []})
+            }
+            console.log(this.state.query)})
+        console.log("set state",this.state.query)
 
-        this.setState({query: searchWord})
-
-        if(this.state.query){
-            BooksAPI.search(this.state.query).then((searchResult) => {
-                this.setState({searchList: searchResult})
-            })
-            
-        }
-        else {
-            this.setState({searchList: []})
-        }
     }
+
     render() {
-        
-        console.log(this.state.searchList)
+
+        console.log("in render")
         
         return (
             <div className="search-books">
@@ -39,7 +45,8 @@ class Search extends Component {
                 </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                {this.state.searchList.map((book, i) => <Book title={book.title} author={book.authors} thumbnail={book.imageLinks.thumbnail} key={i}/>)}
+                {this.state.searchList.length > 0 ? (this.state.searchList.map((book, i) => <Book title={book.title} author={book.authors} thumbnail={book.imageLinks.thumbnail} key={i}/>)) :
+                (<p>No results</p>)}
               </ol>
             </div>
           </div>
