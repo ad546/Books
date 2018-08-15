@@ -8,7 +8,7 @@ class Book extends Component {
     }
 
     render() {
-        console.log(this.props.thumbnail)
+        // console.log(this.props.thumbnail)
         return (
         <div className="book">
           <div className="book-top">
