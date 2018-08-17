@@ -1,9 +1,18 @@
+// eslint-disable-next-line
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Book from './Book'
 
 class ListBooks extends React.Component {
 
+    state = {
+        wantToRead: [],
+        currentlyReading: [],
+        booksRead: []
+    }
+
     render () {
+
         return (
             <div className="app">
                 <div className="list-books">
@@ -16,7 +25,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Currently Reading</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                        {/* list books */}
+                                    {this.state.currentlyReading.map((book, i) => <Book title={book.title} author={book.authors} thumbnail={book.thumbnail} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>
@@ -24,7 +33,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Want to Read</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                        {/* list books */}
+                                        {this.state.wantToRead.map((book, i) => <Book title={book.title} author={book.authors} thumbnail={book.thumbnail} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>
@@ -32,7 +41,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Read</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                        {/* list books */}
+                                        {this.state.booksRead.map((book, i) => <Book title={book.title} author={book.authors} thumbnail={book.thumbnail} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>

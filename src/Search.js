@@ -44,7 +44,7 @@ class Search extends Component {
 
     render() {
 
-        // console.log("in render", this.state)
+        console.log("in render", this.state)
         // console.log("in render", this.state.searchList.length)
         
         return (
