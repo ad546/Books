@@ -5,14 +5,8 @@ import Book from './Book'
 
 class ListBooks extends React.Component {
 
-    state = {
-        wantToRead: [],
-        currentlyReading: [],
-        booksRead: []
-    }
-
     render () {
-
+        console.log("LB props", this.props)
         return (
             <div className="app">
                 <div className="list-books">
@@ -25,7 +19,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Currently Reading</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                    {this.state.currentlyReading.map((book, i) => <Book title={book.title} author={book.authors} thumbnail={book.thumbnail} key={i}/>)}
+                                    {this.props.currentlyReading.map((book, i) => <Book updateListBooks={this.props.updateListBooks} title={book.state.title} author={book.state.authors} thumbnail={book.state.thumbnail} value={book.state.value} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>
@@ -33,7 +27,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Want to Read</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                        {this.state.wantToRead.map((book, i) => <Book title={book.title} author={book.authors} thumbnail={book.thumbnail} key={i}/>)}
+                                        {this.props.wantToRead.map((book, i) => <Book updateListBooks={this.props.updateListBooks} title={book.state.title} author={book.state.authors} thumbnail={book.state.thumbnail} value={book.state.value} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>
@@ -41,7 +35,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Read</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                        {this.state.booksRead.map((book, i) => <Book title={book.title} author={book.authors} thumbnail={book.thumbnail} key={i}/>)}
+                                        {this.props.booksRead.map((book, i) => <Book updateListBooks={this.props.updateListBooks} title={book.state.title} author={book.state.authors} thumbnail={book.state.thumbnail} value={book.state.value} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>
