@@ -6,7 +6,6 @@ import Book from './Book'
 class ListBooks extends React.Component {
 
     render () {
-        console.log("LB props", this.props)
         return (
             <div className="app">
                 <div className="list-books">
@@ -19,7 +18,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Currently Reading</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                    {this.props.currentlyReading.map((book, i) => <Book updateListBooks={this.props.updateListBooks} title={book.state.title} author={book.state.authors} thumbnail={book.state.thumbnail} value={book.state.value} key={i}/>)}
+                                    {this.props.books.filter(book => book.shelf === 'currentlyReading').map((book, i) => <Book changeStatus={this.props.changeStatus} book={book} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>
@@ -27,7 +26,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Want to Read</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                        {this.props.wantToRead.map((book, i) => <Book updateListBooks={this.props.updateListBooks} title={book.state.title} author={book.state.authors} thumbnail={book.state.thumbnail} value={book.state.value} key={i}/>)}
+                                        {this.props.books.filter(book => book.shelf === 'wantToRead').map((book, i) => <Book changeStatus={this.props.changeStatus} book={book} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>
@@ -35,7 +34,7 @@ class ListBooks extends React.Component {
                                 <h2 className="bookshelf-title">Read</h2>
                                 <div className="bookshelf-books">
                                     <ol className="books-grid">
-                                        {this.props.booksRead.map((book, i) => <Book updateListBooks={this.props.updateListBooks} title={book.state.title} author={book.state.authors} thumbnail={book.state.thumbnail} value={book.state.value} key={i}/>)}
+                                        {this.props.books.filter(book => book.shelf === 'read').map((book, i) => <Book changeStatus={this.props.changeStatus} book={book} key={i}/>)}
                                     </ol>
                                 </div>
                             </div>

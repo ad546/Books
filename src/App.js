@@ -3,41 +3,34 @@ import { Route } from 'react-router'
 import './App.css'
 import Search from './Search'
 import ListBooks from './ListBooks';
+import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends Component {
   state = {
-    wantToRead: [],
-    currentlyReading: [],
-    booksRead: []
+    books: []
   }
 
-  updateListBooks = (state) => {
-    if (state.value === "wantToRead") {
-      this.state.wantToRead.push({state})
-    }
-    else if (state.value === "currentlyReading") {
-      this.state.currentlyReading.push({state})
-    }
-    else if (state.value === "read") {
-      this.state.booksRead.push({state})
-    }
-    else {
-      
-    }
-    
-    console.log("in APP")
-    console.log(this.state.wantToRead)
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({books: books})
+    })
   }
 
+  changeStatus = (event, book) => {
+    BooksAPI.update(book, event.target.value).then((books) => {
+      this.componentDidMount()
+    })
+  }
+  
   render() {
-
+    
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          <ListBooks updateListBooks={this.updateListBooks} currentlyReading={this.state.currentlyReading} wantToRead={this.state.wantToRead} booksRead={this.state.booksRead}/>
+          <ListBooks books={this.state.books} changeStatus={this.changeStatus}/>
         )}/>
         <Route path="/search" render={() => (
-          <Search updateListBooks={this.updateListBooks}/>
+          <Search books={this.state.books} changeStatus={this.changeStatus}/>
         )}/>
         
       </div>

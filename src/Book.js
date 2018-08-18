@@ -1,30 +1,36 @@
 import React, { Component } from 'react'
 
 class Book extends Component {
-    state = {
-      title: "",
-      authors: "",
-      thumbnail: "",
-      value: "none"
+    checkforImage = () => {
+      if (!this.props.book.hasOwnProperty('imageLinks')) {
+        this.props.book.imageLinks = {}
+        this.props.book.imageLinks.thumbnail = "https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg"
+      }
     }
 
-    changeStatus = (event) => {
-      this.setState({title: this.props.title, authors: this.props.author, thumbnail: this.props.thumbnail, value: event.target.value},
-      () => {
-        this.props.updateListBooks(this.state)
-        // console.log("props", this.props)
-        console.log("Book", this.state)
-      })
+    checkforBooks = () => {
+      for (let item of this.props.books) {
+        if (item.id === this.props.book.id){
+          this.props.book.shelf = item.shelf
+          break
+          }
+        else {
+          this.props.book.shelf = "none"
+        }     
+      }
     }
 
     render() {
-        
+      if (this.props.books){
+        this.checkforBooks()
+      }
+        this.checkforImage()
         return (
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: "url(" + this.props.thumbnail + ")"}}></div>
+            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: "url(" + this.props.book.imageLinks.thumbnail + ")"}}></div>
             <div className="book-shelf-changer">
-              <select onChange={this.changeStatus}>
+              <select onChange={(event) => this.props.changeStatus(event, this.props.book)} defaultValue={this.props.book.shelf}>
                 <option value="move" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -33,8 +39,8 @@ class Book extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">{ this.props.title }</div>
-          <div className="book-authors">{ this.props.author }</div>
+          <div className="book-title">{ this.props.book.title }</div>
+          <div className="book-authors">{ this.props.book.authors }</div>
         </div>
         )
     }
