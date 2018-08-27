@@ -11,25 +11,23 @@ class BooksApp extends Component {
   }
 
   componentDidMount() {
+    this.getStoredBooks()
+  }
+
+  getStoredBooks = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({books})
     })
   }
 
   changeStatus = (event, book) => {
-    console.log(event.target.value, "event outside API")
     let shelf = event.target.value
     BooksAPI.update(book, shelf).then(() => {
-      console.log(shelf, "target value")
-      book.shelf = shelf
-      this.setState(state => ({
-        books: state.books.filter(b => b.id !== book.id).concat(book)
-      }))
+      this.getStoredBooks()
     })
   }
   
   render() {
-    
     return (
       <div className="app">
       <Switch>

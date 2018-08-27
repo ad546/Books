@@ -15,7 +15,6 @@ class Search extends Component {
         const searchWord = event.target.value.trim()
         this.setState({query: searchWord}, () => {
             if(this.state.query){
-                console.log("query state true", this.state.searchList)
                 BooksAPI.search(this.state.query).then((searchResult) => {
                     this.setState({searchList: searchResult}, () => {
                     
@@ -24,7 +23,6 @@ class Search extends Component {
                 
             }
             else {
-                console.log("in else", this.state.searchList)
                 this.setState({searchList: []}, () => {
                 })  
             }
